@@ -155,6 +155,10 @@ namespace Services.Core
                     {
                         data.categoryID = model.categoryID;
                     }
+                    if (model.exerciseResourceID != null)
+                    {
+                        data.exerciseResourceID = model.exerciseResourceID;
+                    }
                     if (model.exerciseTimePerSet != null)
                     {
                         data.exerciseTimePerSet = model.exerciseTimePerSet;

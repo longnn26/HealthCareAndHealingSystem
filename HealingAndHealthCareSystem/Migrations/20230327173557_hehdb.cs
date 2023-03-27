@@ -106,6 +106,21 @@ namespace HealingAndHealthCareSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExerciseResource",
+                columns: table => new
+                {
+                    exerciseResourceID = table.Column<Guid>(type: "uuid", nullable: false),
+                    resourceName = table.Column<string>(type: "text", nullable: false),
+                    videoURL = table.Column<string>(type: "text", nullable: false),
+                    imageURL = table.Column<string>(type: "text", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseResource", x => x.exerciseResourceID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MedicalRecord",
                 columns: table => new
                 {
@@ -318,6 +333,41 @@ namespace HealingAndHealthCareSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExerciseDetail",
+                columns: table => new
+                {
+                    exerciseDetailID = table.Column<Guid>(type: "uuid", nullable: false),
+                    exerciseID = table.Column<Guid>(type: "uuid", nullable: false),
+                    categoryID = table.Column<Guid>(type: "uuid", nullable: false),
+                    exerciseResourceID = table.Column<Guid>(type: "uuid", nullable: false),
+                    exerciseTimePerSet = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    description = table.Column<string>(type: "varchar(50)", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseDetail", x => x.exerciseDetailID);
+                    table.ForeignKey(
+                        name: "FK_ExerciseDetail_Category_categoryID",
+                        column: x => x.categoryID,
+                        principalTable: "Category",
+                        principalColumn: "categoryID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerciseDetail_ExerciseResource_exerciseResourceID",
+                        column: x => x.exerciseResourceID,
+                        principalTable: "ExerciseResource",
+                        principalColumn: "exerciseResourceID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerciseDetail_Exercise_exerciseID",
+                        column: x => x.exerciseID,
+                        principalTable: "Exercise",
+                        principalColumn: "exerciseID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SubProfile",
                 columns: table => new
                 {
@@ -400,56 +450,6 @@ namespace HealingAndHealthCareSystem.Migrations
                         column: x => x.bookingScheduleID,
                         principalTable: "BookingSchedule",
                         principalColumn: "bookingScheduleID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExerciseDetail",
-                columns: table => new
-                {
-                    exerciseDetailID = table.Column<Guid>(type: "uuid", nullable: false),
-                    exerciseID = table.Column<Guid>(type: "uuid", nullable: false),
-                    categoryID = table.Column<Guid>(type: "uuid", nullable: false),
-                    resourceID = table.Column<Guid>(type: "uuid", nullable: false),
-                    exerciseTimePerSet = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    description = table.Column<string>(type: "varchar(50)", nullable: false),
-                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerciseDetail", x => x.exerciseDetailID);
-                    table.ForeignKey(
-                        name: "FK_ExerciseDetail_Category_categoryID",
-                        column: x => x.categoryID,
-                        principalTable: "Category",
-                        principalColumn: "categoryID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExerciseDetail_Exercise_exerciseID",
-                        column: x => x.exerciseID,
-                        principalTable: "Exercise",
-                        principalColumn: "exerciseID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExerciseResource",
-                columns: table => new
-                {
-                    exerciseResourceID = table.Column<Guid>(type: "uuid", nullable: false),
-                    exerciseDetailID = table.Column<Guid>(type: "uuid", nullable: false),
-                    videoURL = table.Column<string>(type: "text", nullable: false),
-                    imageURL = table.Column<string>(type: "text", nullable: false),
-                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerciseResource", x => x.exerciseResourceID);
-                    table.ForeignKey(
-                        name: "FK_ExerciseResource_ExerciseDetail_exerciseDetailID",
-                        column: x => x.exerciseDetailID,
-                        principalTable: "ExerciseDetail",
-                        principalColumn: "exerciseDetailID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -616,20 +616,14 @@ namespace HealingAndHealthCareSystem.Migrations
                 column: "exerciseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExerciseDetail_resourceID",
+                name: "IX_ExerciseDetail_exerciseResourceID",
                 table: "ExerciseDetail",
-                column: "resourceID",
-                unique: true);
+                column: "exerciseResourceID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExerciseFeedback_exerciseID",
                 table: "ExerciseFeedback",
                 column: "exerciseID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExerciseResource_exerciseDetailID",
-                table: "ExerciseResource",
-                column: "exerciseDetailID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedback_bookingScheduleID",
@@ -720,14 +714,6 @@ namespace HealingAndHealthCareSystem.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ExerciseDetail_ExerciseResource_resourceID",
-                table: "ExerciseDetail",
-                column: "resourceID",
-                principalTable: "ExerciseResource",
-                principalColumn: "exerciseResourceID",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_PhysiotherapistSlot_Slot_slotID",
                 table: "PhysiotherapistSlot",
                 column: "slotID",
@@ -759,14 +745,6 @@ namespace HealingAndHealthCareSystem.Migrations
                 name: "FK_TotalSchedule_Slot_slotID",
                 table: "TotalSchedule");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_ExerciseDetail_Category_categoryID",
-                table: "ExerciseDetail");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ExerciseDetail_ExerciseResource_resourceID",
-                table: "ExerciseDetail");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -786,6 +764,9 @@ namespace HealingAndHealthCareSystem.Migrations
                 name: "Deposit");
 
             migrationBuilder.DropTable(
+                name: "ExerciseDetail");
+
+            migrationBuilder.DropTable(
                 name: "ExerciseFeedback");
 
             migrationBuilder.DropTable(
@@ -799,6 +780,12 @@ namespace HealingAndHealthCareSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "ExerciseResource");
 
             migrationBuilder.DropTable(
                 name: "BookingSchedule");
@@ -816,6 +803,9 @@ namespace HealingAndHealthCareSystem.Migrations
                 name: "Slot");
 
             migrationBuilder.DropTable(
+                name: "Exercise");
+
+            migrationBuilder.DropTable(
                 name: "TotalSchedule");
 
             migrationBuilder.DropTable(
@@ -823,18 +813,6 @@ namespace HealingAndHealthCareSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "PhysiotherapistDetail");
-
-            migrationBuilder.DropTable(
-                name: "Category");
-
-            migrationBuilder.DropTable(
-                name: "ExerciseResource");
-
-            migrationBuilder.DropTable(
-                name: "ExerciseDetail");
-
-            migrationBuilder.DropTable(
-                name: "Exercise");
         }
     }
 }

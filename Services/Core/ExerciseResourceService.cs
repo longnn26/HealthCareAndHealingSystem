@@ -133,7 +133,7 @@ namespace Services.Core
                 {
                     if (model.exerciseResourceID != null)
                     {
-                        data.exerciseDetailID = model.exerciseDetailID;
+                        data.resourceName = model.resourceName;
                     }
                     if(model.videoURL!= null) 
                     {

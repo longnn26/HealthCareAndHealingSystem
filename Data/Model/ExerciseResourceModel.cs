@@ -10,7 +10,7 @@ namespace Data.Model
 {
     public class ExerciseResourceCreateModel
     {
-        public Guid exerciseDetailID { get; set; }
+        public string resourceName { get; set; }
         public string videoURL { get; set; }
         public string imageURL { get; set; }
 
@@ -19,7 +19,7 @@ namespace Data.Model
     public class ExerciseResourceUpdateModel
     {
         public Guid exerciseResourceID { get; set; }
-        public Guid exerciseDetailID { get; set; }
+        public string resourceName { get; set; }
 
         public string videoURL { get; set; }
 

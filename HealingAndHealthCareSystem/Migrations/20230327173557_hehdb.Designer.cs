@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealingAndHealthCareSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230323071737_hehdb")]
+    [Migration("20230327173557_hehdb")]
     partial class hehdb
     {
         /// <inheritdoc />
@@ -145,14 +145,14 @@ namespace HealingAndHealthCareSystem.Migrations
                     b.Property<Guid>("exerciseID")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("exerciseResourceID")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("exerciseTimePerSet")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<Guid>("resourceID")
-                        .HasColumnType("uuid");
 
                     b.HasKey("exerciseDetailID");
 
@@ -160,8 +160,7 @@ namespace HealingAndHealthCareSystem.Migrations
 
                     b.HasIndex("exerciseID");
 
-                    b.HasIndex("resourceID")
-                        .IsUnique();
+                    b.HasIndex("exerciseResourceID");
 
                     b.ToTable("ExerciseDetail");
                 });
@@ -198,9 +197,6 @@ namespace HealingAndHealthCareSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("exerciseDetailID")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("imageURL")
                         .IsRequired()
                         .HasColumnType("text");
@@ -208,13 +204,15 @@ namespace HealingAndHealthCareSystem.Migrations
                     b.Property<bool>("isDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("resourceName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("videoURL")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("exerciseResourceID");
-
-                    b.HasIndex("exerciseDetailID");
 
                     b.ToTable("ExerciseResource");
                 });
@@ -781,8 +779,8 @@ namespace HealingAndHealthCareSystem.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Entities.ExerciseResource", "ExerciseResource")
-                        .WithOne()
-                        .HasForeignKey("Data.Entities.ExerciseDetail", "resourceID")
+                        .WithMany()
+                        .HasForeignKey("exerciseResourceID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -802,17 +800,6 @@ namespace HealingAndHealthCareSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Exercise");
-                });
-
-            modelBuilder.Entity("Data.Entities.ExerciseResource", b =>
-                {
-                    b.HasOne("Data.Entities.ExerciseDetail", "ExerciseDetail")
-                        .WithMany()
-                        .HasForeignKey("exerciseDetailID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExerciseDetail");
                 });
 
             modelBuilder.Entity("Data.Entities.Feedback", b =>

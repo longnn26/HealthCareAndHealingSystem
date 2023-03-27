@@ -14,7 +14,8 @@ namespace Data.Model
         public Guid exerciseID { get; set; }
        
         public Guid categoryID { get; set; }
-        
+        public Guid exerciseResourceID { get; set; }
+
         public DateTime exerciseTimePerSet { get; set; }
         public string description { get; set; }
         public bool isDeleted { get; set; }
@@ -25,14 +26,16 @@ namespace Data.Model
         public Guid exerciseID { get; set; }
 
         public Guid categoryID { get; set; }
+        public Guid exerciseResourceID { get; set; }
 
         public DateTime exerciseTimePerSet { get; set; }
         public string description { get; set; }
         public bool isDeleted { get; set; }
 
     }
-    public class ExerciseDetailModel : ExerciseUpdateModel
+    public class ExerciseDetailModel : ExerciseDetailUpdateModel
     {
+        
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
     }

@@ -12,9 +12,7 @@ namespace Data.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid exerciseResourceID { get; set; }
-        public Guid exerciseDetailID { get; set; }
-        [ForeignKey("exerciseDetailID")]
-        public virtual ExerciseDetail ExerciseDetail { get; set; }
+        public string resourceName { get; set; }
         public string videoURL { get; set; }
         public string imageURL { get; set; }
         public bool isDeleted { get; set; }
