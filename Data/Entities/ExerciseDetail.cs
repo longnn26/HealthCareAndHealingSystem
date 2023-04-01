@@ -18,9 +18,7 @@ namespace Data.Entities
         public Guid categoryID { get; set; }
         [ForeignKey("categoryID")]
         public virtual Category Category { get; set; }
-        public Guid exerciseResourceID { get; set; }
-        [ForeignKey("exerciseResourceID")]
-        public virtual ExerciseResource ExerciseResource { get; set; }
+
         public DateTime exerciseTimePerSet { get; set; }
         [Column(TypeName = "varchar(50)")]
         public string description { get; set; }

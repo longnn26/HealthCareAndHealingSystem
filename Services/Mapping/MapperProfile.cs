@@ -22,19 +22,12 @@ namespace Services.Mapping
             CreateMap<Data.Entities.Category, CategoryModel>();
             CreateMap<PhysiotherapistDetailCreateModel, Data.Entities.PhysiotherapistDetail>();
             CreateMap<Data.Entities.PhysiotherapistDetail, PhysiotherapistDetailModel>();
-            CreateMap<TotalScheduleCreateModel, Data.Entities.TotalSchedule>();
-            CreateMap<Data.Entities.TotalSchedule, TotalScheduleModel>();
-
-            
+            CreateMap<PhysiotherapistSlotCreateModel, Data.Entities.PhysiotherapistSlot>();
+            CreateMap<Data.Entities.PhysiotherapistSlot, PhysiotherapistSlotModel>();
             CreateMap<FeedbackCreateModel, Data.Entities.Feedback>();
-            CreateMap<Data.Entities.Feedback, FeedbackModel>();
-            
-            CreateMap<ExerciseFeedbackCreateModel, Data.Entities.ExerciseFeedback>();
-            CreateMap<Data.Entities.ExerciseFeedback, ExerciseFeedbackModel>();
-            CreateMap<BookingScheduleCreateModel, Data.Entities.BookingSchedule>();
-            CreateMap<Data.Entities.BookingSchedule, BookingScheduleModel>();
-            CreateMap<DepositCreateModel, Data.Entities.Deposit>();
-            CreateMap<Data.Entities.Deposit, DepositModel>();
+            CreateMap<Data.Entities.Feedback, FeedbackModel>();           
+            CreateMap<BookingDetailCreateModel, Data.Entities.BookingDetail>();
+            CreateMap<Data.Entities.BookingDetail, BookingDetailModel>();
             CreateMap<TypeOfSlotCreateModel, Data.Entities.TypeOfSlot>();
             CreateMap<Data.Entities.TypeOfSlot, TypeOfSlotModel>();
             CreateMap<SlotCreateModel, Data.Entities.Slot>();
@@ -45,7 +38,9 @@ namespace Services.Mapping
             CreateMap<Data.Entities.SubProfile, SubProfileModel>();
             CreateMap<UserExerciseCreateModel, Data.Entities.UserExercise>();
             CreateMap<Data.Entities.UserExercise, UserExerciseModel>();
-            
+            CreateMap<MedicalRecordCreateModel, Data.Entities.MedicalRecord>();
+            CreateMap<Data.Entities.MedicalRecord, MedicalRecordModel>();
+
             CreateMap<UserCreateModel, User>();
             CreateMap<User, UserModel>();
         }

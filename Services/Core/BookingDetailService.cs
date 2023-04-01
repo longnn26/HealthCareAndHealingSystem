@@ -1,46 +1,45 @@
-﻿using Data.Model;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Data.DataAccess;
 using AutoMapper;
 using Data.DataAccess.Constant;
+using Data.Model;
 
 namespace Services.Core
 {
-    public interface ITotalScheduleService
+    public interface IBookingDetailService
     {
-        ResultModel Add(TotalScheduleCreateModel model);
-        ResultModel Update(TotalScheduleUpdateModel model);
+        ResultModel Add(BookingDetailCreateModel model);
+        ResultModel Update(BookingDetailUpdateModel model);
         ResultModel Get(Guid? id);
         ResultModel GetAll();
         ResultModel Delete(Guid id);
 
-
     }
-    public class TotalScheduleService : ITotalScheduleService
+    public class BookingDetailService : IBookingDetailService
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
 
-
-        public TotalScheduleService(AppDbContext dbContext, IMapper mapper)
+        public BookingDetailService(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+          
         }
-        public ResultModel Add(TotalScheduleCreateModel model)
+        public ResultModel Add(BookingDetailCreateModel model)
         {
             var result = new ResultModel();
             try
             {
-                var data = _mapper.Map<TotalScheduleCreateModel, Data.Entities.TotalSchedule>(model);
-                _dbContext.TotalSchedule.Add(data);
+                var data = _mapper.Map<BookingDetailCreateModel, Data.Entities.BookingDetail>(model);
+                _dbContext.BookingDetail.Add(data);
                 _dbContext.SaveChanges();
-                result.Data = _mapper.Map<Data.Entities.TotalSchedule, TotalScheduleModel>(data);
+                result.Data = _mapper.Map<Data.Entities.BookingDetail, BookingDetailModel>(data);
                 result.Succeed = true;
 
             }
@@ -53,31 +52,7 @@ namespace Services.Core
 
         public ResultModel Delete(Guid id)
         {
-            ResultModel result = new ResultModel();
-            try
-            {
-                var data = _dbContext.TotalSchedule.Where(s => s.totalScheduleID == id).FirstOrDefault();
-                if (data != null)
-                {
-
-                    _dbContext.SaveChanges();
-                    var view = _mapper.Map<Data.Entities.TotalSchedule, TotalScheduleModel>(data);
-                    result.Data = view;
-                    result.Succeed = true;
-                }
-                else
-                {
-                    result.ErrorMessage = "TotalSchedule" + ErrorMessage.ID_NOT_EXISTED;
-                    result.Succeed = false;
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                result.ErrorMessage = e.InnerException != null ? e.InnerException.Message : e.Message;
-            }
-            return result;
+            throw new NotImplementedException();
         }
 
         public ResultModel Get(Guid? id)
@@ -85,16 +60,16 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.TotalSchedule.Where(s => s.totalScheduleID == id).FirstOrDefault();
+                var data = _dbContext.BookingDetail.Where(s => s.bookingDetailID == id ).FirstOrDefault();
                 if (data != null)
                 {
-                    var view = _mapper.Map<Data.Entities.TotalSchedule, TotalScheduleModel>(data);
+                    var view = _mapper.Map<Data.Entities.BookingDetail, BookingDetailModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
                 else
                 {
-                    result.ErrorMessage = "TotalSchedule" + ErrorMessage.ID_NOT_EXISTED;
+                    result.ErrorMessage = "BookingDetail" + ErrorMessage.ID_NOT_EXISTED;
                     result.Succeed = false;
                 }
 
@@ -112,8 +87,8 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.Exercise;
-                var view = _mapper.ProjectTo<TotalScheduleModel>(data);
+                var data = _dbContext.BookingDetail;
+                var view = _mapper.ProjectTo<BookingDetailModel>(data);
                 result.Data = view;
                 result.Succeed = true;
             }
@@ -124,10 +99,12 @@ namespace Services.Core
             return result;
         }
 
-        public ResultModel Update(TotalScheduleUpdateModel model)
+        public ResultModel Update(BookingDetailUpdateModel model)
         {
             throw new NotImplementedException();
         }
     }
-    }
 
+
+
+}

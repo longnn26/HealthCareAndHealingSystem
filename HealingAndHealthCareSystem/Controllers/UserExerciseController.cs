@@ -16,6 +16,7 @@ namespace HealingAndHealthCareSystem.Controllers
             _userExerciseservice = userExerciseService;
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
+
         [HttpPost]
         public IActionResult Post([FromBody] UserExerciseCreateModel model)
         {

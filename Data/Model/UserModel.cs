@@ -15,6 +15,7 @@ namespace Data.Model
     }
     public class UserCreateModel
     {
+        
         [Required]
         public string userName { get; set; }
         [Required]
@@ -27,9 +28,10 @@ namespace Data.Model
         public string lastName { get; set; }
         [Required]
         public string address { get; set; }
+        public string image { get; set; }
 
         public DateTime dob { get; set; }
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public bool gender { get; set; } = true;
         public bool bookingStatus { get; set; }
         public bool banStatus { get; set; }
@@ -40,8 +42,9 @@ namespace Data.Model
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string address { get; set; }
+        public string image { get; set; }
         public DateTime dob { get; set; }
-        public string phoneNumber { get; set; }                                                                                                                                                     
+        public string PhoneNumber { get; set; }
         public bool gender { get; set; } = true;
         public bool bookingStatus { get; set; }
         public bool banStatus { get; set; }
@@ -53,7 +56,7 @@ namespace Data.Model
    
     public class LoginModel
     {
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string password { get; set; }
     }
 }

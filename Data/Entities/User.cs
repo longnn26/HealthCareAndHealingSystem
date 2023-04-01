@@ -12,23 +12,21 @@ namespace Data.Entities
 {
     public class User : IdentityUser<Guid>
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid userID { get; set; }
 /*        public Guid depositID { get; set; }
         [ForeignKey("depositID")]
         public virtual Deposit Deposit { get; set; }
         public Guid symptonsID { get; set; }
         [ForeignKey("symptonsID")]
         public virtual MedicalRecord MedicalRecord { get; set; }*/
-        public string phoneNumber { get; set; }
+        
 
         [Column(TypeName = "varchar(1000)")]
-        public string firstName { get; set; }
+        public string? firstName { get; set; }
         [Column(TypeName = "varchar(1000)")]
-        public string lastName { get; set; }
-        public string address { get; set; }
-        public string image { get; set; }
-        public DateTime dob { get; set; }
+        public string? lastName { get; set; }
+        public string? address { get; set; }
+        public string? image { get; set; }
+        public DateTime? dob { get; set; }
         public bool gender { get; set; } = true;
         public bool bookingStatus { get; set; }
         public bool banStatus { get; set; }

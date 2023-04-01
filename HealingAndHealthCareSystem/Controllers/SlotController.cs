@@ -14,7 +14,7 @@ namespace HealingAndHealthCareSystem.Controllers
         {
             _slotservice = slotservice;
         }
-        //[Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         public IActionResult Post([FromBody] SlotCreateModel model)
         {

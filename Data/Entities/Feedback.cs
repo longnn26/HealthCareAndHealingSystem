@@ -12,12 +12,12 @@ namespace Data.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid feedbackID { get; set; }
-        public Guid userID { get; set; }
-        [ForeignKey("userID")]
+        public Guid Id { get; set; }
+        [ForeignKey("Id")]
         public virtual User User { get; set; }
-        public Guid bookingScheduleID { get; set; }
-        [ForeignKey("bookingScheduleID")]
-        public virtual BookingSchedule BookingSchedule { get; set; }
+        public Guid bookingDetailID { get; set; }
+        [ForeignKey("bookingDetailID")]
+        public virtual BookingDetail BookingDetail { get; set; }
         public string comment { get; set; }
         public int ratingStar { get; set; }
         public bool isDeleted { get; set; }

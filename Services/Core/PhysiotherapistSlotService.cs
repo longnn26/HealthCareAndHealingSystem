@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Entities
+namespace Services.Core
 {
-    public class FreeTimeSchedule
+    internal class PhysiotherapistSlotService
     {
-        public int freeTimeShedule { get; set; }
-
     }
 }

@@ -7,20 +7,20 @@ namespace HealingAndHealthCareSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TotalScheduleController : ControllerBase
+    public class PhysiotherapistSlotController : ControllerBase
     {
-        private readonly ITotalScheduleService _totalScheduleservice;
-        private readonly ITotalScheduleService _totalScheduleservice1;
-        public TotalScheduleController(ITotalScheduleService totalScheduleService, ITotalScheduleService totalScheduleService1)
+        private readonly IPhysiotherapistSlotService _physiotherapistSlotservice;
+        private readonly IPhysiotherapistSlotService _physiotherapistSlotservice1;
+        public PhysiotherapistSlotController(IPhysiotherapistSlotService physiotherapistSlotService, IPhysiotherapistSlotService physiotherapistSlotService1)
         {
-            _totalScheduleservice = totalScheduleService;
-            _totalScheduleservice1 = totalScheduleService1;
+            _physiotherapistSlotservice = physiotherapistSlotService;
+            _physiotherapistSlotservice1 = physiotherapistSlotService1;
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
-        public IActionResult Post([FromBody] TotalScheduleCreateModel model)
+        public IActionResult Post([FromBody] PhysiotherapistSlotCreateModel model)
         {
-            var result = _totalScheduleservice.Add(model);
+            var result = _physiotherapistSlotservice.Add(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
@@ -29,31 +29,32 @@ namespace HealingAndHealthCareSystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _totalScheduleservice.GetAll();
+            var result = _physiotherapistSlotservice.GetAll();
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var result = _totalScheduleservice.Get(id);
+            var result = _physiotherapistSlotservice.Get(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteById(Guid id)
         {
-            var result = _totalScheduleservice.Delete(id);
+            var result = _physiotherapistSlotservice.Delete(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpPut]
-        public IActionResult Update(TotalScheduleUpdateModel model)
+        public IActionResult Update(PhysiotherapistSlotUpdateModel model)
         {
-            var result = _totalScheduleservice.Update(model);
+            var result = _physiotherapistSlotservice.Update(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
-        
+
+
     }
 }

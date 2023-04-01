@@ -97,8 +97,10 @@ namespace Services.Core
             try
             {
                 var data = _dbContext.ExerciseDetail.Where(s => s.exerciseID == id && !s.isDeleted).FirstOrDefault();
+
                 if (data != null)
                 {
+                    var exerciseResource = data.ExerciseResource;
                     var view = _mapper.Map<Data.Entities.ExerciseDetail, ExerciseDetailModel>(data);
                     result.Data = view;
                     result.Succeed = true;

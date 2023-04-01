@@ -7,19 +7,18 @@ namespace HealingAndHealthCareSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExerciseFeedbackController : ControllerBase
+    public class BookingDetailController : ControllerBase
     {
-        private readonly IExerciseFeedbackService _exerciseFeedbackservice;
-        private readonly IExerciseFeedbackService _exerciseFeebackservice1;
-        public ExerciseFeedbackController(IExerciseFeedbackService exerciseFeedbackService)
+        private readonly IBookingDetailService _bookingDetailservice;
+        public BookingDetailController(IBookingDetailService bookingDetailservice)
         {
-            _exerciseFeedbackservice = exerciseFeedbackService;
+            _bookingDetailservice = bookingDetailservice;
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
-        public IActionResult Post([FromBody] ExerciseFeedbackCreateModel model)
+        public IActionResult Post([FromBody] BookingDetailCreateModel model)
         {
-            var result = _exerciseFeedbackservice.Add(model);
+            var result = _bookingDetailservice.Add(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
@@ -28,28 +27,28 @@ namespace HealingAndHealthCareSystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _exerciseFeedbackservice.GetAll();
+            var result = _bookingDetailservice.GetAll();
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var result = _exerciseFeedbackservice.Get(id);
+            var result = _bookingDetailservice.Get(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteById(Guid id)
         {
-            var result = _exerciseFeedbackservice.Delete(id);
+            var result = _bookingDetailservice.Delete(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpPut]
-        public IActionResult Update(ExerciseFeedbackUpdateModel model)
+        public IActionResult Update(BookingDetailUpdateModel model)
         {
-            var result = _exerciseFeedbackservice.Update(model);
+            var result = _bookingDetailservice.Update(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }

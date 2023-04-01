@@ -18,9 +18,6 @@ namespace Data.Entities
         public Guid physiotherapistID { get; set; }
         [ForeignKey("physiotherapistID")]
         public virtual PhysiotherapistDetail PhysiotherapistDetail { get; set; }
-        public Guid totalScheduleID { get; set; }
-        [ForeignKey("totalScheduleID")]
-        public virtual TotalSchedule TotalSchedule { get; set; }
         public Guid exerciseID { get; set; }
         [ForeignKey("exerciseID")]
         public virtual Exercise Exercise { get; set; }

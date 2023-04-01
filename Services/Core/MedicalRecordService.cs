@@ -11,37 +11,36 @@ using Data.DataAccess.Constant;
 
 namespace Services.Core
 {
-    public interface IDepositService
+    public interface IMedicalRecordService
     {
-        ResultModel Add(DepositCreateModel model);
-        ResultModel Update(DepositUpdateModel model);
+        ResultModel Add(MedicalRecordCreateModel model);
+        ResultModel Update(MedicalRecordUpdateModel model);
         ResultModel Get(Guid? id);
         ResultModel GetAll();
         ResultModel Delete(Guid id);
 
-
     }
-    public class DepositService : IDepositService
+    public class MedicalRecordService : IMedicalRecordService
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly Guid id;
 
-        public DepositService(AppDbContext dbContext, IMapper mapper)
+        public MedicalRecordService(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             id = Guid.NewGuid();
         }
-        public ResultModel Add(DepositCreateModel model)
+        public ResultModel Add(MedicalRecordCreateModel model)
         {
             var result = new ResultModel();
             try
             {
-                var data = _mapper.Map<DepositCreateModel, Data.Entities.Deposit>(model);
-                _dbContext.Deposit.Add(data);
+                var data = _mapper.Map<MedicalRecordCreateModel, Data.Entities.MedicalRecord>(model);
+                _dbContext.MedicalRecord.Add(data);
                 _dbContext.SaveChanges();
-                result.Data = _mapper.Map<Data.Entities.Deposit, DepositModel>(data);
+                result.Data = _mapper.Map<Data.Entities.MedicalRecord, MedicalRecordModel>(data);
                 result.Succeed = true;
 
             }
@@ -57,18 +56,18 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.Deposit.Where(s => s.depositID == id && !s.isDeleted).FirstOrDefault();
+                var data = _dbContext.MedicalRecord.Where(s => s.medicalRecordID == id && !s.isDeleted).FirstOrDefault();
                 if (data != null)
                 {
                     data.isDeleted = true;
                     _dbContext.SaveChanges();
-                    var view = _mapper.Map<Data.Entities.Deposit, DepositModel>(data);
+                    var view = _mapper.Map<Data.Entities.MedicalRecord, MedicalRecordModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
                 else
                 {
-                    result.ErrorMessage = "Deposit" + ErrorMessage.ID_NOT_EXISTED;
+                    result.ErrorMessage = "MedicalRecord" + ErrorMessage.ID_NOT_EXISTED;
                     result.Succeed = false;
                 }
 
@@ -86,16 +85,16 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.Deposit.Where(s => s.depositID == id && !s.isDeleted).FirstOrDefault();
+                var data = _dbContext.MedicalRecord.Where(s => s.medicalRecordID == id && !s.isDeleted).FirstOrDefault();
                 if (data != null)
                 {
-                    var view = _mapper.Map<Data.Entities.Deposit, DepositModel>(data);
+                    var view = _mapper.Map<Data.Entities.MedicalRecord, MedicalRecordModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
                 else
                 {
-                    result.ErrorMessage = "Deposit" + ErrorMessage.ID_NOT_EXISTED;
+                    result.ErrorMessage = "MedicalRecord" + ErrorMessage.ID_NOT_EXISTED;
                     result.Succeed = false;
                 }
 
@@ -113,8 +112,8 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.Deposit.Where(s => s.isDeleted != true);
-                var view = _mapper.ProjectTo<DepositModel>(data);
+                var data = _dbContext.MedicalRecord.Where(s => s.isDeleted != true);
+                var view = _mapper.ProjectTo<MedicalRecordModel>(data);
                 result.Data = view;
                 result.Succeed = true;
             }
@@ -125,27 +124,44 @@ namespace Services.Core
             return result;
         }
 
-        public ResultModel Update(DepositUpdateModel model)
+
+
+        public ResultModel Update(MedicalRecordUpdateModel model)
         {
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.Deposit.Where(s => s.depositID == model.depositID).FirstOrDefault();
+                var data = _dbContext.MedicalRecord.Where(s => s.medicalRecordID == model.medicalRecordID).FirstOrDefault();
                 if (data != null)
                 {
-                    if (model.depositID != null)
+                    if (model.medicalRecordID != null)
                     {
-                        data.deposit = model.deposit;
+                        data.presentIllness = model.presentIllness;
                     }
-                    
+                    if (model.pastMedical != null)
+                    {
+                        data.pastMedical = model.pastMedical;
+                    }
+                    if (model.pastMedical != null)
+                    {
+                        data.pastMedical = model.pastMedical;
+                    }
+                    if (model.isDeleted != null)
+                    {
+                        data.isDeleted = model.isDeleted;
+                    }
+                    if (model.categoryID != null)
+                    {
+                        data.categoryID = model.categoryID;
+                    }
 
                     _dbContext.SaveChanges();
                     result.Succeed = true;
-                    result.Data = _mapper.Map<Data.Entities.Deposit, DepositModel>(data);
+                    result.Data = _mapper.Map<Data.Entities.MedicalRecord, MedicalRecordModel>(data);
                 }
                 else
                 {
-                    result.ErrorMessage = "Deposit" + ErrorMessage.ID_NOT_EXISTED;
+                    result.ErrorMessage = "MedicalRecord" + ErrorMessage.ID_NOT_EXISTED;
                     result.Succeed = false;
                 }
             }

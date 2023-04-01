@@ -15,6 +15,7 @@ namespace HealingAndHealthCareSystem.Controllers
             _exerciseservice = exerciseService;
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
+        // [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Post([FromBody] ExerciseCreateModel model)
         {
@@ -24,6 +25,7 @@ namespace HealingAndHealthCareSystem.Controllers
         }
 
         //[Authorize(AuthenticationSchemes = "Bearer")]
+
         [HttpGet]
         public IActionResult Get()
         {

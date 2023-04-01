@@ -14,7 +14,6 @@ namespace Data.Model
         public Guid exerciseID { get; set; }
        
         public Guid categoryID { get; set; }
-        public Guid exerciseResourceID { get; set; }
 
         public DateTime exerciseTimePerSet { get; set; }
         public string description { get; set; }
@@ -26,7 +25,6 @@ namespace Data.Model
         public Guid exerciseID { get; set; }
 
         public Guid categoryID { get; set; }
-        public Guid exerciseResourceID { get; set; }
 
         public DateTime exerciseTimePerSet { get; set; }
         public string description { get; set; }

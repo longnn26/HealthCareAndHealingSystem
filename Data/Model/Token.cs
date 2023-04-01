@@ -14,7 +14,7 @@ namespace Data.Model
         public int Expires_in { get; set; }
         public string username { get; set; }
         public string firstName { get; set; }
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string lastName { get; set; }
     }
 }

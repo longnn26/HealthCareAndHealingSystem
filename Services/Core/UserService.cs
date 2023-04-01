@@ -64,9 +64,11 @@ namespace Services.Core
         {
             var result = new ResultModel();
             result.Succeed = false;
-            var user = await _userManager.FindByNameAsync(model.phoneNumber);
-            if (user != null)
+            var userByPhone = _dbContext.User.Where(s => s.PhoneNumber == model.PhoneNumber).FirstOrDefault();
+            
+            if (userByPhone != null)
             {
+                var user = await _userManager.FindByNameAsync(userByPhone.UserName);
                 var check = await _signInManager.CheckPasswordSignInAsync(user, model.password, false);
                 if (!check.Succeeded)
                 {
@@ -82,7 +84,7 @@ namespace Services.Core
                 }
                 else
                 {
-                    var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.userID).ToList();
+                    var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
                     var roles = new List<string>();
                     foreach (var userRole in userRoles)
                     {
@@ -116,7 +118,7 @@ namespace Services.Core
                     firstName = model.firstName.Trim(),
                     lastName = model.lastName.Trim(),
                     address = model.address.Trim(),
-                    phoneNumber = model.phoneNumber,
+                    PhoneNumber = model.PhoneNumber.Trim(),
                     NormalizedEmail = model.Email.Trim(),
                     bookingStatus = false,
                     banStatus = false,
@@ -129,7 +131,7 @@ namespace Services.Core
                     return result;
                 }
                 result.Succeed = true;
-                result.Data = user.userID;
+                result.Data = user.Id;
             }
             catch (Exception ex)
             {
@@ -151,7 +153,7 @@ namespace Services.Core
                     firstName = model.firstName.Trim(),
                     lastName = model.lastName.Trim(),
                     address = model.address.Trim(),
-                    phoneNumber = model.phoneNumber,
+                    PhoneNumber = model.PhoneNumber.Trim(),
                     NormalizedEmail = model.Email.Trim(),
                     bookingStatus = false,
                     banStatus = false,
@@ -206,7 +208,7 @@ namespace Services.Core
                 userID = user.Id.ToString(),
                 username = user.UserName,
                 firstName = user.firstName,
-                phoneNumber = user.phoneNumber,
+                
                 lastName = user.lastName,
             };
         }

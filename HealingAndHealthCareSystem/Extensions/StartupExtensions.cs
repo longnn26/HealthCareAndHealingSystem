@@ -52,18 +52,15 @@ namespace ScheduleManagementSession01.Extensions
             services.AddScoped<ICategoryService, Services.Core.CategoryService>();
             services.AddScoped<IExerciseDetailService, Services.Core.ExerciseDetailService>();
             services.AddScoped<IPhysiotherapistDetailService, Services.Core.PhysiotherapistDetailService>();
-            services.AddScoped<ITotalScheduleService, Services.Core.TotalScheduleService>();
+            services.AddScoped<IPhysiotherapistSlotService, Services.Core.PhysiotherapistSlotService>();
             services.AddScoped<ITypeOfSlotService, Services.Core.TypeOfSlotService>();
             services.AddScoped<ISlotService, Services.Core.SlotService>();
+            services.AddScoped<IMedicalRecordService, Services.Core.MedicalRecordService>();
             services.AddScoped<IFeedbackService, Services.Core.FeedbackService>();
-            
-            services.AddScoped<IExerciseFeedbackService, Services.Core.ExerciseFeedbackService>();
-            services.AddScoped<IBookingScheduleService, BookingScheduleService>();
+            services.AddScoped<IBookingDetailService, BookingDetailService>();
             services.AddScoped<IExerciseResourceService, ExerciseResourceService>();
             services.AddScoped<ISubProfileService, SubProfileService>();
             services.AddScoped<IUserExerciseService, UserExerciseService>();
-            
-            services.AddScoped<IDepositService,DepositService>();
             services.AddScoped<IUserService, UserService>();
             
         }

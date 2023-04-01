@@ -11,6 +11,7 @@ namespace Data.Model
         public string presentIllness { get; set; }
         public string pastMedical { get; set; }
         public bool isDeleted { get; set; }
+        public Guid categoryID { get; set; }
     }
     public class MedicalRecordUpdateModel
     {
@@ -18,6 +19,8 @@ namespace Data.Model
         public string presentIllness { get; set; }
         public string pastMedical { get; set; }
         public bool isDeleted { get; set; }
+        public Guid categoryID { get; set; }
+
     }
     public class MedicalRecordModel : MedicalRecordUpdateModel
     {

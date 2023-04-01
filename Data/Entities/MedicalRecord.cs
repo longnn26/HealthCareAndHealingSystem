@@ -15,5 +15,9 @@ namespace Data.Entities
         public string presentIllness { get; set; }
         public string pastMedical { get; set; }
         public bool isDeleted { get; set; }
+        public Guid categoryID { get; set; }
+        [ForeignKey("categoryID")]
+        public virtual Category Category { get; set; }
+
     }
 }
