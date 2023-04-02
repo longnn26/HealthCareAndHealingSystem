@@ -100,7 +100,7 @@ namespace Services.Core
 
                 if (data != null)
                 {
-                    var exerciseResource = data.ExerciseResource;
+                    
                     var view = _mapper.Map<Data.Entities.ExerciseDetail, ExerciseDetailModel>(data);
                     result.Data = view;
                     result.Succeed = true;
@@ -157,10 +157,7 @@ namespace Services.Core
                     {
                         data.categoryID = model.categoryID;
                     }
-                    if (model.exerciseResourceID != null)
-                    {
-                        data.exerciseResourceID = model.exerciseResourceID;
-                    }
+                     
                     if (model.exerciseTimePerSet != null)
                     {
                         data.exerciseTimePerSet = model.exerciseTimePerSet;

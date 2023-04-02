@@ -10,11 +10,11 @@ namespace HealingAndHealthCareSystem.Controllers
     public class PhysiotherapistSlotController : ControllerBase
     {
         private readonly IPhysiotherapistSlotService _physiotherapistSlotservice;
-        private readonly IPhysiotherapistSlotService _physiotherapistSlotservice1;
-        public PhysiotherapistSlotController(IPhysiotherapistSlotService physiotherapistSlotService, IPhysiotherapistSlotService physiotherapistSlotService1)
+
+        public PhysiotherapistSlotController(IPhysiotherapistSlotService physiotherapistSlotService)
         {
             _physiotherapistSlotservice = physiotherapistSlotService;
-            _physiotherapistSlotservice1 = physiotherapistSlotService1;
+
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]

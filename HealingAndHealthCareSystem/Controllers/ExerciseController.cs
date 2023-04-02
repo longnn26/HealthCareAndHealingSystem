@@ -7,6 +7,7 @@ namespace HealingAndHealthCareSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class ExerciseController : ControllerBase
     {
         private readonly IExerciseService _exerciseservice;
@@ -14,8 +15,8 @@ namespace HealingAndHealthCareSystem.Controllers
         {
             _exerciseservice = exerciseService;
         }
-        //[Authorize(AuthenticationSchemes = "Bearer")]
-        // [Authorize(Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Post([FromBody] ExerciseCreateModel model)
         {
@@ -24,7 +25,8 @@ namespace HealingAndHealthCareSystem.Controllers
             return BadRequest(result.ErrorMessage);
         }
 
-        //[Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
 
         [HttpGet]
         public IActionResult Get()

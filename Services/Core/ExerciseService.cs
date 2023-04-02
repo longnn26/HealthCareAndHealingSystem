@@ -19,23 +19,19 @@ namespace Services.Core
         ResultModel GetAll();
         ResultModel Delete(Guid id);
 
-        Guid TestDI();
+        
     }
     public class ExerciseService : IExerciseService
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
-        private readonly Guid id;
-
-        public Guid TestDI()
-        {
-            return id;
-        }
+        
+        
         public ExerciseService(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            id = Guid.NewGuid();
+            
         }
         public ResultModel Add(ExerciseCreateModel model)
         {
