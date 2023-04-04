@@ -41,5 +41,21 @@ namespace HealingAndHealthCareSystem.Controllers
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
+        [HttpGet("{email}")]
+        public IActionResult getByEmail(string email)
+        {
+            var result = _userService.GetByEmail(email);
+            if (result.Succeed) return Ok(result.Data);
+            return BadRequest(result.ErrorMessage);
+        }
+        [HttpGet("[action]/{id}")]
+        public IActionResult getById(Guid id)
+        {
+            var result = _userService.GetByID(id);
+            if (result.Succeed) return Ok(result.Data);
+            return BadRequest(result.ErrorMessage);
+        }
+
+
     }
 }
