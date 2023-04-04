@@ -11,17 +11,17 @@ using Data.DataAccess.Constant;
 
 namespace Services.Core
 {
-    public interface IPhysiotherapistSlotService
+    public interface IScheduleService
     {
-        ResultModel Add(PhysiotherapistSlotCreateModel model);
-        ResultModel Update(PhysiotherapistSlotUpdateModel model);
+        ResultModel Add(ScheduleCreateModel model);
+        ResultModel Update(ScheduleUpdateModel model);
         ResultModel Get(Guid? id);
         ResultModel GetAll();
         ResultModel Delete(Guid id);
 
         
     }
-    public class PhysiotherapistSlotService : IPhysiotherapistSlotService
+    public class ScheduleService : IScheduleService
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -29,21 +29,21 @@ namespace Services.Core
 
         
         
-        public PhysiotherapistSlotService(AppDbContext dbContext, IMapper mapper)
+        public ScheduleService(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             
         }
-        public ResultModel Add(PhysiotherapistSlotCreateModel model)
+        public ResultModel Add(ScheduleCreateModel model)
         {
             var result = new ResultModel();
             try
             {
-                var data = _mapper.Map<PhysiotherapistSlotCreateModel, Data.Entities.PhysiotherapistSlot>(model);
-                _dbContext.PhysiotherapistSlot.Add(data);
+                var data = _mapper.Map<ScheduleCreateModel, Data.Entities.Schedule>(model);
+                _dbContext.Schedule.Add(data);
                 _dbContext.SaveChanges();
-                result.Data = _mapper.Map<Data.Entities.PhysiotherapistSlot, PhysiotherapistSlotModel>(data);
+                result.Data = _mapper.Map<Data.Entities.Schedule, ScheduleModel>(data);
                 result.Succeed = true;
 
             }
@@ -59,12 +59,12 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.PhysiotherapistSlot.FirstOrDefault();
+                var data = _dbContext.Schedule.FirstOrDefault();
                 if (data != null)
                 {
                     
                     _dbContext.SaveChanges();
-                    var view = _mapper.Map<Data.Entities.PhysiotherapistSlot, PhysiotherapistSlotModel>(data);
+                    var view = _mapper.Map<Data.Entities.Schedule, ScheduleModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
@@ -93,8 +93,8 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.PhysiotherapistSlot;
-                var view = _mapper.ProjectTo<PhysiotherapistSlotModel>(data);
+                var data = _dbContext.Schedule;
+                var view = _mapper.ProjectTo<ScheduleModel>(data);
                 result.Data = view;
                 result.Succeed = true;
             }
@@ -105,7 +105,7 @@ namespace Services.Core
             return result;
         }
 
-        public ResultModel Update(PhysiotherapistSlotUpdateModel model)
+        public ResultModel Update(ScheduleUpdateModel model)
         {
             throw new NotImplementedException();
         }

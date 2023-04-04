@@ -15,17 +15,16 @@ namespace Data.Entities
         public Guid typeOfSlotID { get; set; }
         [ForeignKey("typeOfSlotID")]
         public virtual TypeOfSlot TypeOfSlot { get; set; }
-        public Guid physiotherapistID { get; set; }
-        [ForeignKey("physiotherapistID")]
-        public virtual PhysiotherapistDetail PhysiotherapistDetail { get; set; }
-        public Guid exerciseID { get; set; }
+        
+        public Guid? exerciseID { get; set; }
         [ForeignKey("exerciseID")]
         public virtual Exercise Exercise { get; set; }
         public DateTime timeStart { get; set; }
         public DateTime timeEnd { get; set; }
         public TimeOnly duaration { get; set; }
         public string description { get; set; }
-        public float fee { get; set; }
+        public float price { get; set; }
+        public bool available { get; set; }
         public bool isDeleted { get; set; }
     }
 }

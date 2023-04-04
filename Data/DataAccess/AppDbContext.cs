@@ -26,13 +26,14 @@ namespace Data.DataAccess
         }
         public DbSet<Category> Category { get; set; }
         public DbSet<BookingDetail> BookingDetail { get; set; }
+        public DbSet<BookingSchedule> BookingSchedule { get; set; }
         public DbSet<Exercise> Exercise { get; set; }
         public DbSet<ExerciseDetail> ExerciseDetail { get; set; }
         public DbSet<ExerciseResource> ExerciseResource { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<MedicalRecord> MedicalRecord { get; set; }
-        public DbSet<PhysiotherapistDetail> PhysiotherapistDetail { get; set; }
-        public DbSet<PhysiotherapistSlot> PhysiotherapistSlot { get; set; }
+        public DbSet<Physiotherapist> Physiotherapist { get; set; }
+        public DbSet<Schedule> Schedule { get; set; }
         public DbSet<Slot> Slot { get; set; }
         public DbSet<SubProfile> SubProfile { get; set; }
         public DbSet<TypeOfSlot> TypeOfSlot { get; set; }

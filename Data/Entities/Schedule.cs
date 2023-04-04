@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    public class PhysiotherapistSlot
+    public class Schedule
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid physiotherapistSlotID { get; set; }
+        public Guid scheduleID { get; set; }
         public Guid slotID { get; set; }
         [ForeignKey("slotID")]
         public virtual Slot Slot { get; set; }
         public Guid physiotherapistID { get; set; }
         [ForeignKey("physiotherapistID")]
         public virtual PhysiotherapistDetail PhysiotherapistDetail { get; set; }
+        public DateOnly day { get; set; }
     }
 }

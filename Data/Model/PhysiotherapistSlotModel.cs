@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Data.Model
 {
-    public class PhysiotherapistSlotCreateModel
+    public class ScheduleCreateModel
     {
         public Guid slotID { get; set; }
         public Guid physiotherapistID { get; set; }
     }
-    public class PhysiotherapistSlotUpdateModel
+    public class ScheduleUpdateModel
     {
         public Guid physiotherapistSlotID { get; set; }
         public Guid slotID { get; set; }
         public Guid physiotherapistID { get; set; }
 
     }
-    public class PhysiotherapistSlotModel : PhysiotherapistSlotUpdateModel
+    public class ScheduleModel : ScheduleUpdateModel
     {
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }

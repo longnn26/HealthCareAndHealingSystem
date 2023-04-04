@@ -42,10 +42,10 @@ namespace Services.Core
             var result = new ResultModel();
             try
             {
-                var data = _mapper.Map<PhysiotherapistDetailCreateModel, Data.Entities.PhysiotherapistDetail>(model);
+                var data = _mapper.Map<PhysiotherapistDetailCreateModel, Data.Entities.Physiotherapist>(model);
                 _dbContext.PhysiotherapistDetail.Add(data);
                 _dbContext.SaveChanges();
-                result.Data = _mapper.Map<Data.Entities.PhysiotherapistDetail, PhysiotherapistDetailModel>(data);
+                result.Data = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
                 result.Succeed = true;
 
             }
@@ -66,7 +66,7 @@ namespace Services.Core
                 {
                     data.isDeleted = true;
                     _dbContext.SaveChanges();
-                    var view = _mapper.Map<Data.Entities.PhysiotherapistDetail, PhysiotherapistDetailModel>(data);
+                    var view = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
@@ -93,7 +93,7 @@ namespace Services.Core
                 var data = _dbContext.PhysiotherapistDetail.Where(s => s.physiotherapistID == id && !s.isDeleted).FirstOrDefault();
                 if (data != null)
                 {
-                    var view = _mapper.Map<Data.Entities.PhysiotherapistDetail, PhysiotherapistDetailModel>(data);
+                    var view = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
@@ -162,7 +162,7 @@ namespace Services.Core
 
                     _dbContext.SaveChanges();
                     result.Succeed = true;
-                    result.Data = _mapper.Map<Data.Entities.PhysiotherapistDetail, PhysiotherapistDetailModel>(data);
+                    result.Data = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
                 }
                 else
                 {
