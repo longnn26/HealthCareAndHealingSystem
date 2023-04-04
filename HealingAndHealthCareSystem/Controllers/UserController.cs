@@ -55,6 +55,12 @@ namespace HealingAndHealthCareSystem.Controllers
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
+        [HttpGet("[action]/{id}")]
+        public IActionResult getUserRole(Guid id) {
+            var result = _userService.GetUserRole(id);
+            if (result.Succeed) return Ok(result.Data);
+            return BadRequest(result.ErrorMessage); 
+        }
 
 
     }

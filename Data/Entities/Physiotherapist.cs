@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    public class PhysiotherapistDetail 
+    public class Physiotherapist
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid physiotherapistID { get; set; }

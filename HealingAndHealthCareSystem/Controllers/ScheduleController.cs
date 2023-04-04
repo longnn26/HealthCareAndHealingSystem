@@ -7,20 +7,20 @@ namespace HealingAndHealthCareSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PhysiotherapistSlotController : ControllerBase
+    public class ScheduleController : ControllerBase
     {
-        private readonly IPhysiotherapistSlotService _physiotherapistSlotservice;
+        private readonly IScheduleService _scheduleService;
 
-        public PhysiotherapistSlotController(IPhysiotherapistSlotService physiotherapistSlotService)
+        public ScheduleController(IScheduleService scheduleService)
         {
-            _physiotherapistSlotservice = physiotherapistSlotService;
+            _scheduleService = scheduleService;
 
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
-        public IActionResult Post([FromBody] PhysiotherapistSlotCreateModel model)
+        public IActionResult Post([FromBody] ScheduleCreateModel model)
         {
-            var result = _physiotherapistSlotservice.Add(model);
+            var result = _scheduleService.Add(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
@@ -29,28 +29,28 @@ namespace HealingAndHealthCareSystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _physiotherapistSlotservice.GetAll();
+            var result = _scheduleService.GetAll();
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var result = _physiotherapistSlotservice.Get(id);
+            var result = _scheduleService.Get(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteById(Guid id)
         {
-            var result = _physiotherapistSlotservice.Delete(id);
+            var result = _scheduleService.Delete(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpPut]
-        public IActionResult Update(PhysiotherapistSlotUpdateModel model)
+        public IActionResult Update(ScheduleUpdateModel model)
         {
-            var result = _physiotherapistSlotservice.Update(model);
+            var result = _scheduleService.Update(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }

@@ -7,20 +7,20 @@ namespace HealingAndHealthCareSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PhysiotherapistDetailController : ControllerBase
+    public class PhysiotherapistController : ControllerBase
     {
-        private readonly IPhysiotherapistDetailService _physiotherapistDetailservice;
-        private readonly IPhysiotherapistDetailService _physiotherapistDetailservice1;
-        public PhysiotherapistDetailController(IPhysiotherapistDetailService physiotherapistDetailService, IPhysiotherapistDetailService physiotherapistDetailService1)
+        private readonly IPhysiotherapistService _physiotherapistservice;
+        private readonly IPhysiotherapistService _physiotherapistservice1;
+        public PhysiotherapistController(IPhysiotherapistService physiotherapistService, IPhysiotherapistService physiotherapistService1)
         {
-            _physiotherapistDetailservice = physiotherapistDetailService;
-            _physiotherapistDetailservice1 = physiotherapistDetailService1;
+            _physiotherapistservice = physiotherapistService;
+            _physiotherapistservice1 = physiotherapistService1;
         }
         //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
-        public IActionResult Post([FromBody] PhysiotherapistDetailCreateModel model)
+        public IActionResult Post([FromBody] PhysiotherapistCreateModel model)
         {
-            var result = _physiotherapistDetailservice.Add(model);
+            var result = _physiotherapistservice.Add(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
@@ -29,28 +29,28 @@ namespace HealingAndHealthCareSystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _physiotherapistDetailservice.GetAll();
+            var result = _physiotherapistservice.GetAll();
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var result = _physiotherapistDetailservice.Get(id);
+            var result = _physiotherapistservice.Get(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteById(Guid id)
         {
-            var result = _physiotherapistDetailservice.Delete(id);
+            var result = _physiotherapistservice.Delete(id);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
         [HttpPut]
-        public IActionResult Update(PhysiotherapistDetailUpdateModel model)
+        public IActionResult Update(PhysiotherapistUpdateModel model)
         {
-            var result = _physiotherapistDetailservice.Update(model);
+            var result = _physiotherapistservice.Update(model);
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }

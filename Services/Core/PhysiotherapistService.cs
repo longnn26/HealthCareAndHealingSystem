@@ -11,17 +11,17 @@ using Data.DataAccess.Constant;
 
 namespace Services.Core
 {
-    public interface IPhysiotherapistDetailService
+    public interface IPhysiotherapistService
     {
-        ResultModel Add(PhysiotherapistDetailCreateModel model);
-        ResultModel Update(PhysiotherapistDetailUpdateModel model);
+        ResultModel Add(PhysiotherapistCreateModel model);
+        ResultModel Update(PhysiotherapistUpdateModel model);
         ResultModel Get(Guid? id);
         ResultModel GetAll();
         ResultModel Delete(Guid id);
 
         Guid TestDI();
     }
-    public class PhysiotherapistDetailService : IPhysiotherapistDetailService
+    public class PhysiotherapistService : IPhysiotherapistService
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -31,21 +31,21 @@ namespace Services.Core
         {
             return id;
         }
-        public PhysiotherapistDetailService(AppDbContext dbContext, IMapper mapper)
+        public PhysiotherapistService(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             id = Guid.NewGuid();
         }
-        public ResultModel Add(PhysiotherapistDetailCreateModel model)
+        public ResultModel Add(PhysiotherapistCreateModel model)
         {
             var result = new ResultModel();
             try
             {
-                var data = _mapper.Map<PhysiotherapistDetailCreateModel, Data.Entities.Physiotherapist>(model);
-                _dbContext.PhysiotherapistDetail.Add(data);
+                var data = _mapper.Map<PhysiotherapistCreateModel, Data.Entities.Physiotherapist>(model);
+                _dbContext.Physiotherapist.Add(data);
                 _dbContext.SaveChanges();
-                result.Data = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
+                result.Data = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistModel>(data);
                 result.Succeed = true;
 
             }
@@ -61,12 +61,12 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.PhysiotherapistDetail.Where(s => s.physiotherapistID == id && !s.isDeleted).FirstOrDefault();
+                var data = _dbContext.Physiotherapist.Where(s => s.physiotherapistID == id && !s.isDeleted).FirstOrDefault();
                 if (data != null)
                 {
                     data.isDeleted = true;
                     _dbContext.SaveChanges();
-                    var view = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
+                    var view = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
@@ -90,10 +90,10 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.PhysiotherapistDetail.Where(s => s.physiotherapistID == id && !s.isDeleted).FirstOrDefault();
+                var data = _dbContext.Physiotherapist.Where(s => s.physiotherapistID == id && !s.isDeleted).FirstOrDefault();
                 if (data != null)
                 {
-                    var view = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
+                    var view = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistModel>(data);
                     result.Data = view;
                     result.Succeed = true;
                 }
@@ -117,8 +117,8 @@ namespace Services.Core
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.PhysiotherapistDetail.Where(s => s.isDeleted != true);
-                var view = _mapper.ProjectTo<PhysiotherapistDetailModel>(data);
+                var data = _dbContext.Physiotherapist.Where(s => s.isDeleted != true);
+                var view = _mapper.ProjectTo<PhysiotherapistModel>(data);
                 result.Data = view;
                 result.Succeed = true;
             }
@@ -129,12 +129,12 @@ namespace Services.Core
             return result;
         }
 
-        public ResultModel Update(PhysiotherapistDetailUpdateModel model)
+        public ResultModel Update(PhysiotherapistUpdateModel model)
         {
             ResultModel result = new ResultModel();
             try
             {
-                var data = _dbContext.PhysiotherapistDetail.Where(s => s.physiotherapistID == model.physiotherapistID).FirstOrDefault();
+                var data = _dbContext.Physiotherapist.Where(s => s.physiotherapistID == model.physiotherapistID).FirstOrDefault();
                 if (data != null)
                 {
                     //if (model.physiotherapistID != null)
@@ -162,7 +162,7 @@ namespace Services.Core
 
                     _dbContext.SaveChanges();
                     result.Succeed = true;
-                    result.Data = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistDetailModel>(data);
+                    result.Data = _mapper.Map<Data.Entities.Physiotherapist, PhysiotherapistModel>(data);
                 }
                 else
                 {

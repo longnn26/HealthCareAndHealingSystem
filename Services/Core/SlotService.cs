@@ -143,7 +143,7 @@ namespace Services.Core
                     }
                     if (model.fee != null)
                     {
-                        data.fee = model.fee;
+                        data.price = model.fee;
                     }
 
 

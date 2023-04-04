@@ -285,24 +285,40 @@ namespace Services.Core
             return resultModel;
         }
 
-        //public ResultModel GetUserRole(Guid id)
-        //{ ResultModel resultModel = new ResultModel();
-        //    try
-        //    {
-        //        var role = _dbContext.UserRoles.Where(s => s.UserId == id).FirstOrDefault();
-        //        if (data != null)
-        //        {
-        //            var data = _dbContext.Role.Where (s => s.Id == role.RoleId).FirstOrDefault();   
-                    
-        //        }
-        //        else
-        //        {
-        //            resultModel.ErrorMessage = "User" + ErrorMessage.ID_NOT_EXISTED;
-        //            resultModel.Succeed = false;
-        //        }
-        //    }
-            
-        //}
+        public ResultModel GetUserRole(Guid id)
+        {
+            ResultModel resultModel = new ResultModel();
+            try
+            {
+                var role = _dbContext.UserRoles.Where(s => s.UserId == id).FirstOrDefault();
+                if (role != null)
+                {
+                    var data = _dbContext.Role.Where(s => s.Id == role.RoleId).FirstOrDefault();
+
+                    if (data != null)
+                    {
+                        resultModel.Data = data;
+                        resultModel.Succeed = true;
+                    }
+                    else
+                    {
+                        resultModel.ErrorMessage = "Role" + ErrorMessage.ID_NOT_EXISTED;
+                        resultModel.Succeed = false;
+                    }
+                }
+                else
+                {
+                    resultModel.ErrorMessage = "UserRole" + ErrorMessage.ID_NOT_EXISTED;
+                    resultModel.Succeed = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultModel.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
+            return resultModel;
+
+        }
     }
 
 }

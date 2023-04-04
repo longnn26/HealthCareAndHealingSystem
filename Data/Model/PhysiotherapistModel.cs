@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Model
 {
-    public class PhysiotherapistDetailCreateModel
+    public class PhysiotherapistCreateModel
     {
 
         //public Guid? userID { get; set; }
@@ -19,7 +19,7 @@ namespace Data.Model
         public int workingStatus { get; set; }
         public bool isDeleted  { get; set; }
     }
-    public class PhysiotherapistDetailUpdateModel
+    public class PhysiotherapistUpdateModel
     {
         public Guid physiotherapistID { get; set; }
         //public Guid? userID { get; set; }
@@ -31,7 +31,7 @@ namespace Data.Model
         public bool isDeleted { get; set; }
 
     }
-    public class PhysiotherapistDetailModel : PhysiotherapistDetailUpdateModel
+    public class PhysiotherapistModel : PhysiotherapistUpdateModel
     {
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }

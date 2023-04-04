@@ -17,7 +17,7 @@ namespace Data.Entities
         public virtual Slot Slot { get; set; }
         public Guid physiotherapistID { get; set; }
         [ForeignKey("physiotherapistID")]
-        public virtual PhysiotherapistDetail PhysiotherapistDetail { get; set; }
+        public virtual Physiotherapist PhysiotherapistDetail { get; set; }
         public DateOnly day { get; set; }
     }
 }
