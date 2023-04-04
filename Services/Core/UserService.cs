@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.DataAccess;
+using Data.DataAccess.Constant;
 using Data.Entities;
 using Data.Model;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,10 @@ namespace Services.Core
 
         ResultModel Update(UserUpdateModel model);
         ResultModel GetAll();
+        ResultModel GetByEmail(String email);
+        ResultModel GetByID(Guid Id);
+        ResultModel GetUserRole(Guid id);
+
     }
     public class UserService : IUserService
     {
@@ -157,7 +162,8 @@ namespace Services.Core
                     NormalizedEmail = model.Email.Trim(),
                     bookingStatus = false,
                     banStatus = false,
-                    gender = true
+                    gender = true,
+                    
                 };
                 var check = await _userManager.CreateAsync(user, model.password);
                 if (!await _roleManager.RoleExistsAsync("Admin"))
@@ -208,7 +214,7 @@ namespace Services.Core
                 userID = user.Id.ToString(),
                 username = user.UserName,
                 firstName = user.firstName,
-                
+                PhoneNumber = user.PhoneNumber,
                 lastName = user.lastName,
             };
         }
@@ -230,7 +236,73 @@ namespace Services.Core
             return claims;
         }
 
+        public ResultModel GetByEmail(string email)
+        {
+            ResultModel resultModel= new ResultModel();
+            try
+            {
+                var data = _dbContext.User.Where(s => s.Email == email).FirstOrDefault();
+                if (data != null)
+                {
+                    var view = _mapper.Map<User, UserModel>(data);
+                    resultModel.Data = view;
+                    resultModel.Succeed = true;
+                }
+                else
+                {
+                    resultModel.ErrorMessage = "User" + ErrorMessage.ID_NOT_EXISTED;
+                    resultModel.Succeed = false;
+                }
+            }
+            catch (Exception ex) { 
+                resultModel.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
+            return resultModel;
+        }
 
+        public ResultModel GetByID(Guid id)
+        {
+            ResultModel resultModel = new ResultModel();
+            try
+            {
+                var data = _dbContext.User.Where(s => s.Id == id).FirstOrDefault();
+                if (data != null)
+                {
+                    var view = _mapper.Map<User, UserModel>(data);
+                    resultModel.Data = view;
+                    resultModel.Succeed = true;
+                }
+                else
+                {
+                    resultModel.ErrorMessage = "User" + ErrorMessage.ID_NOT_EXISTED;
+                    resultModel.Succeed = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultModel.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
+            return resultModel;
+        }
+
+        //public ResultModel GetUserRole(Guid id)
+        //{ ResultModel resultModel = new ResultModel();
+        //    try
+        //    {
+        //        var role = _dbContext.UserRoles.Where(s => s.UserId == id).FirstOrDefault();
+        //        if (data != null)
+        //        {
+        //            var data = _dbContext.Role.Where (s => s.Id == role.RoleId).FirstOrDefault();   
+                    
+        //        }
+        //        else
+        //        {
+        //            resultModel.ErrorMessage = "User" + ErrorMessage.ID_NOT_EXISTED;
+        //            resultModel.Succeed = false;
+        //        }
+        //    }
+            
+        //}
     }
 
 }
