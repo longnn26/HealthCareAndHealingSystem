@@ -131,41 +131,7 @@ namespace Services.Core
 
         public ResultModel Update(CategoryUpdateModel model)
         {
-            ResultModel result = new ResultModel();
-            try
-            {
-                var data = _dbContext.Category.Where(s => s.categoryID == model.categoryID ).FirstOrDefault();
-                if (data != null)
-                {
-                    if (model.categoryID != null)
-                    {
-                        data.categoryName = model.categoryName;
-                    }
-                    if (model.description != null)
-                    {
-                        data.description = model.description;
-                    }
-
-
-                    
-                    _dbContext.SaveChanges();
-                    result.Succeed = true;
-                    result.Data = _mapper.Map<Data.Entities.Category, CategoryModel>(data);
-                }
-                else
-                {
-                    result.ErrorMessage = "Category" + ErrorMessage.ID_NOT_EXISTED;
-                    result.Succeed = false;
-                }
-            }
-            catch (Exception e)
-            {
-                result.ErrorMessage = e.InnerException != null ? e.InnerException.Message : e.Message;
-            }
-            return result;
+            throw new NotImplementedException();
         }
     }
-
-
-
 }

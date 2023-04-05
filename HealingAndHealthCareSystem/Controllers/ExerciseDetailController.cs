@@ -54,6 +54,13 @@ namespace HealingAndHealthCareSystem.Controllers
             if (result.Succeed) return Ok(result.Data);
             return BadRequest(result.ErrorMessage);
         }
-        
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetByCategoryID (Guid id)
+        {
+            var result = _exerciseDetailservice.GetByCategoryID(id);
+            if (result.Succeed) return Ok(result.Data);
+            return BadRequest(result.ErrorMessage);
+        }
+
     }
 }

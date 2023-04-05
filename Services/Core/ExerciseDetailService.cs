@@ -8,6 +8,7 @@ using Data.Model;
 using Data.DataAccess;
 using AutoMapper;
 using Data.DataAccess.Constant;
+using Data.Entities;
 
 namespace Services.Core
 {
@@ -18,6 +19,7 @@ namespace Services.Core
         ResultModel Get(Guid? id);
         ResultModel GetAll();
         ResultModel Delete(Guid id);
+        ResultModel GetByCategoryID(Guid id);
 
         Guid TestDI();
     }
@@ -170,6 +172,31 @@ namespace Services.Core
                     _dbContext.SaveChanges();
                     result.Succeed = true;
                     result.Data = _mapper.Map<Data.Entities.ExerciseDetail, ExerciseDetailModel>(data);
+                }
+                else
+                {
+                    result.ErrorMessage = "Exercise Detail" + ErrorMessage.ID_NOT_EXISTED;
+                    result.Succeed = false;
+                }
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.InnerException != null ? e.InnerException.Message : e.Message;
+            }
+            return result;
+        }
+
+        public ResultModel GetByCategoryID(Guid id)
+        {
+            ResultModel result = new ResultModel();
+            try
+            {
+                var data = _dbContext.ExerciseDetail.Where(s => s.categoryID == id && !s.isDeleted);
+                if (data != null)
+                {
+                    var view = _mapper.ProjectTo< ExerciseDetailModel>(data);
+                    result.Data = view;
+                    result.Succeed = true;
                 }
                 else
                 {

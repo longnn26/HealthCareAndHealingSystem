@@ -20,7 +20,7 @@ namespace Data.Entities
         public virtual Category Category { get; set; }
 
         public DateTime exerciseTimePerSet { get; set; }
-        [Column(TypeName = "varchar(50)")]
+        //[Column(TypeName = "varchar(1000)")]
         public string description { get; set; }
         public bool isDeleted { get; set; }
     }

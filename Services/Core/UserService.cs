@@ -67,10 +67,56 @@ namespace Services.Core
 
         public async Task<ResultModel> Login(LoginModel model)
         {
+            //var result = new ResultModel();
+            //result.Succeed = false;
+            //var userByPhone = _dbContext.User.Where(s => s.PhoneNumber == model.PhoneNumber).FirstOrDefault();
+
+            //if (userByPhone != null)
+            //{
+            //    var user = await _userManager.FindByNameAsync(userByPhone.UserName);
+            //    var check = await _signInManager.CheckPasswordSignInAsync(user, model.password, false);
+            //    if (!check.Succeeded)
+            //    {
+            //        if (user.banStatus)
+            //        {
+            //            result.ErrorMessage = "Account Banned";
+            //        }
+            //        if (!user.EmailConfirmed)
+            //        {
+            //            //await SendMailConfirm(user);
+            //            result.ErrorMessage = "Unconfirmed Email. Please check email for confirm!";
+            //        }
+
+            //    }
+            //    //else
+            //    //{
+            //    //    result.ErrorMessage = "Password is wrong!";
+            //    //}
+            //    else
+            //    {
+            //        var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
+            //        var roles = new List<string>();
+            //        foreach (var userRole in userRoles)
+            //        {
+            //            var role = await _dbContext.Role.FindAsync(userRole.RoleId);
+            //            if (role != null) roles.Add(role.Name);
+            //        }
+            //        var token = GetAccessToken(user, roles);
+            //        result.Succeed = true;
+            //        result.Data = token;
+
+            //    }
+            //}
+            //else
+            //{
+
+            //    result.ErrorMessage = "Phone Number not found!";
+            //}
+            //return result;
             var result = new ResultModel();
             result.Succeed = false;
             var userByPhone = _dbContext.User.Where(s => s.PhoneNumber == model.PhoneNumber).FirstOrDefault();
-            
+
             if (userByPhone != null)
             {
                 var user = await _userManager.FindByNameAsync(userByPhone.UserName);
@@ -82,6 +128,7 @@ namespace Services.Core
                         //await SendMailConfirm(user);
                         result.ErrorMessage = "Unconfirmed Email. Please check email for confirm!";
                     }
+
                     else
                     {
                         result.ErrorMessage = "Password is wrong!";
@@ -89,17 +136,23 @@ namespace Services.Core
                 }
                 else
                 {
-                    var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
-                    var roles = new List<string>();
-                    foreach (var userRole in userRoles)
+                    if (user.banStatus)
                     {
-                        var role = await _dbContext.Role.FindAsync(userRole.RoleId);
-                        if (role != null) roles.Add(role.Name);
+                        result.ErrorMessage = "Account Banned!";
                     }
-                    var token = GetAccessToken(user, roles);
-                    result.Succeed = true;
-                    result.Data = token;
-
+                    else
+                    {
+                        var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
+                        var roles = new List<string>();
+                        foreach (var userRole in userRoles)
+                        {
+                            var role = await _dbContext.Role.FindAsync(userRole.RoleId);
+                            if (role != null) roles.Add(role.Name);
+                        }
+                        var token = GetAccessToken(user, roles);
+                        result.Succeed = true;
+                        result.Data = token;
+                    }
                 }
             }
             else
@@ -130,11 +183,24 @@ namespace Services.Core
                     gender = true
                 };
                 var check = await _userManager.CreateAsync(user, model.password);
+                if (!await _roleManager.RoleExistsAsync("Member"))
+                {
+                    await _roleManager.CreateAsync(new Role { Description = "Role for Member", Name = "Member" });
+                }
+                var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Member");
+                var userRole = new UserRole
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id
+                };
+                _dbContext.UserRoles.Add(userRole);
+                await _dbContext.SaveChangesAsync();
                 if (!check.Succeeded)
                 {
                     result.ErrorMessage = check.ToString();
                     return result;
                 }
+
                 result.Succeed = true;
                 result.Data = user.Id;
             }
@@ -241,7 +307,7 @@ namespace Services.Core
             ResultModel resultModel= new ResultModel();
             try
             {
-                var data = _dbContext.User.Where(s => s.Email == email).FirstOrDefault();
+                var data = _dbContext.User.Where(s => s.Email == email && s.banStatus == true).FirstOrDefault();
                 if (data != null)
                 {
                     var view = _mapper.Map<User, UserModel>(data);
@@ -265,7 +331,7 @@ namespace Services.Core
             ResultModel resultModel = new ResultModel();
             try
             {
-                var data = _dbContext.User.Where(s => s.Id == id).FirstOrDefault();
+                var data = _dbContext.User.Where(s => s.Id == id && s.banStatus != true).FirstOrDefault();
                 if (data != null)
                 {
                     var view = _mapper.Map<User, UserModel>(data);
